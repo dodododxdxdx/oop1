@@ -1,7 +1,9 @@
 import java.util.Arrays;
-public class Main{
-    // Тестирование программы
-    public static void main(String[] args) {
+public class Main
+{
+
+    public static void main(String[] args)
+    {
         Fraction[] fractions = {
                 new Fraction(1, 1, 2),  // 1 1/2
                 new Fraction(2, 1, 4),  // 2 1/4
@@ -9,16 +11,17 @@ public class Main{
                 new Fraction(0, 2, 3)   // 0 2/3
         };
 
-        // Сортировка массива дробей
-        Arrays.sort(fractions);
 
-        // Вывод отсортированного массива
+        Arrays.sort(fractions); // Сортировка массива дробей
+
+
         System.out.println("Дроби в порядке возрастания:");
-        for (Fraction fraction : fractions) {
-            System.out.println(fraction);
+        for (Fraction fraction : fractions)
+        {
+            System.out.println(fraction); // Вывод отсортированного массива
         }
 
-        // Демонстрация операций
+        
         Fraction fraction1 = new Fraction(1, 1, 2);
         Fraction fraction2 = new Fraction(2, 1, 4);
 
@@ -27,89 +30,101 @@ public class Main{
         System.out.println("Умножение: " + fraction1.multiply(fraction2));
     }
 }
-public class Fraction implements Comparable<Fraction> {
-    private int integerPart; // целая часть
-    private int fractionalPart; // дробная часть
-    private int denominator; // знаменатель дробной части
+public class Fraction implements Comparable<Fraction>
+{
+    private int integerPart;
+    private int fractionalPart;
+    private int denominator;
 
-    // Конструктор
-    public Fraction(int integerPart, int fractionalPart, int denominator) {
+
+    public Fraction(int integerPart, int fractionalPart, int denominator)
+    {
         this.integerPart = integerPart;
         this.fractionalPart = fractionalPart;
         this.denominator = denominator;
     }
 
-    // Получение целой части
-    public int getIntegerPart() {
+
+    public int getIntegerPart()
+    {
         return integerPart;
     }
 
-    // Получение дробной части
-    public int getFractionalPart() {
+
+    public int getFractionalPart()
+    {
         return fractionalPart;
     }
 
-    // Получение знаменателя
-    public int getDenominator() {
+
+    public int getDenominator()
+    {
         return denominator;
     }
 
-    // Преобразование дробного числа в вещественное для удобства операций
-    private double toDecimal() {
-        return integerPart + (double) fractionalPart / denominator;
+
+    private double toDecimal()
+    {
+        return integerPart + (double) fractionalPart / denominator; // Преобразование дробного числа в вещественное для удобства операций
     }
 
-    // Сложение дробей
-    public Fraction add(Fraction other) {
+
+    public Fraction add(Fraction other)
+    {
         int commonDenominator = this.denominator * other.denominator;
         int newIntegerPart = this.integerPart + other.integerPart;
-        int newFractionalPart = (this.fractionalPart * other.denominator) + (other.fractionalPart * this.denominator);
+        int newFractionalPart = (this.fractionalPart * other.denominator) + (other.fractionalPart * this.denominator); // Сложение дробей
 
-        // Преобразуем дробь, если дробная часть больше знаменателя
+
         newIntegerPart += newFractionalPart / commonDenominator;
         newFractionalPart = newFractionalPart % commonDenominator;
 
-        return new Fraction(newIntegerPart, newFractionalPart, commonDenominator);
+        return new Fraction(newIntegerPart, newFractionalPart, commonDenominator); // Преобразуем дробь, если дробная часть больше знаменателя
     }
 
-    // Вычитание дробей
-    public Fraction subtract(Fraction other) {
+
+    public Fraction subtract(Fraction other)
+    {
         int commonDenominator = this.denominator * other.denominator;
         int newIntegerPart = this.integerPart - other.integerPart;
-        int newFractionalPart = (this.fractionalPart * other.denominator) - (other.fractionalPart * this.denominator);
+        int newFractionalPart = (this.fractionalPart * other.denominator) - (other.fractionalPart * this.denominator); // Вычитание дробей
 
-        // Преобразуем дробь, если дробная часть становится отрицательной
-        if (newFractionalPart < 0) {
+
+        if (newFractionalPart < 0)
+        {
             newIntegerPart -= 1;
-            newFractionalPart += commonDenominator;
+            newFractionalPart += commonDenominator; // Преобразуем дробь, если дробная часть становится отрицательной
         }
 
         return new Fraction(newIntegerPart, newFractionalPart, commonDenominator);
     }
 
-    // Умножение дробей
-    public Fraction multiply(Fraction other) {
+
+    public Fraction multiply(Fraction other)
+    {
         int newIntegerPart = this.integerPart * other.integerPart;
-        int newFractionalPart = this.fractionalPart * other.fractionalPart;
+        int newFractionalPart = this.fractionalPart * other.fractionalPart; // Умножение дробей
         int newDenominator = this.denominator * other.denominator;
 
-        // Преобразуем дробь, если дробная часть больше знаменателя
+
         newIntegerPart += newFractionalPart / newDenominator;
-        newFractionalPart = newFractionalPart % newDenominator;
+        newFractionalPart = newFractionalPart % newDenominator; // Преобразуем дробь, если дробная часть больше знаменателя
 
         return new Fraction(newIntegerPart, newFractionalPart, newDenominator);
     }
 
-    // Сравнение дробей
+
     @Override
-    public int compareTo(Fraction other) {
+    public int compareTo(Fraction other)
+    {
         double thisDecimal = this.toDecimal();
         double otherDecimal = other.toDecimal();
-        return Double.compare(thisDecimal, otherDecimal);
+        return Double.compare(thisDecimal, otherDecimal); // Сравнение дробей
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return integerPart + " " + fractionalPart + "/" + denominator;
     }
 }
